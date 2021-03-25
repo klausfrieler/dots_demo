@@ -190,11 +190,11 @@ static_selection_page <-function(){
               if(nchar(git_repo) > 0) shiny::a(href = git_repo, 
                                                target = "_blank", 
                                                "[GitHub]",
-                                               style = "color:#cc0033;text-decoration:none"), 
+                                               style = "color:#f47920;text-decoration:none"), 
               if(nchar(ref_paper) > 0) shiny::a(href = ref_paper, 
                                                 target = "_blank", 
                                                 "[Quelle]", 
-                                                style = "color:#cc0033;text-decoration:none"),
+                                                style = "color:#f47920;text-decoration:none"),
               style = "font-size:10pt;margin-left:5pt"
             ),
             style = "text-align:left; margin-left:20%")
@@ -210,10 +210,10 @@ static_selection_page <-function(){
     })
   
   psychTestR::final_page(
-    body = shiny::div(shiny::h2("Willkommen zu DOTS Demo Seite"), 
+    body = shiny::div(shiny::h2("Willkommen zu DOTS Demo Seite", style = "text-align:left; margin-left:20%"), 
                       #shiny::p("Please choose a test.", style = "text-align:left; margin-left:20%"), 
                       shiny::includeHTML("intro_de.html"), 
-                      shiny::p(body_text, style = "text-align:left; margin-left:20%")))
+                      shiny::p(body_text, style = "text-align:left; margin-left:00%")))
 }
 
 welcome_finished_page <- function(type, test_id){
@@ -421,7 +421,8 @@ dots_demo  <- function(title = "DOTS Demo",
                                    admin_password = admin_password,
                                    demo = TRUE,
                                    languages = languages,
-                                   logo = "https://s3-eu-west-1.amazonaws.com/media.dots.org/img/dots_logo_v3.png",
+                                   #logo = "https://s3-eu-west-1.amazonaws.com/media.dots.org/img/dots_logo_v3.png",
+                                   logo = "https://s3-eu-west-1.amazonaws.com/media.dots.org/img/dgm_logo_v2.png",
                                    logo_width = "96px",
                                    logo_height = "auto"))
 }
