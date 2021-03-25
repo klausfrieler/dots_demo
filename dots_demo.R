@@ -317,7 +317,7 @@ GMS_full_feedback <- function(){
   })
 }  
 
-dots_demo  <- function(title = "DOTS Tests Demo",
+dots_demo  <- function(title = "DOTS Demo",
                                 documentation = "DOTS",
                                 admin_password = "dotsdemo",
                                 researcher_email = "kf@omniversum.de",
@@ -422,6 +422,6 @@ dots_demo  <- function(title = "DOTS Tests Demo",
                                    demo = TRUE,
                                    languages = languages,
                                    logo = "https://s3-eu-west-1.amazonaws.com/media.dots.org/img/dots_logo_v3.png",
-                                   logo_width = "128px",
+                                   logo_width = "96px",
                                    logo_height = "auto"))
 }
