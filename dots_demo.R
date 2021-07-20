@@ -424,7 +424,7 @@ dots_demo  <- function(title = "DOTS Demo",
                             )),
     psychTestR::new_timeline(
       psychTestR::final_page(shiny::p(
-        "You can close the browser tab now."
+        "Sie den Browser Tab jetzt schließen."
       )), dict = dict)
   )
   psychTestR::make_test(
