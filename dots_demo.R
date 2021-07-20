@@ -50,12 +50,19 @@ test_names <- list("HD0" = "Musikalische Hörtests",
                    "MHE" = c("name" = "Fragebogen zum häuslischen musikalischen Umgebung ",
                              "git_repo"  = "https://github.com/fmhoeger/psyquest",
                              "ref_paper" = ""), 
-                   "DAC" = c("name" = "Fragebogen zu Theateraktivittäten",
+                   "DAC" = c("name" = "Fragebogen zu Theateraktivitäten",
                              "git_repo"  = "https://github.com/fmhoeger/psyquest",
                              "ref_paper" = ""), 
                    "PAC" = c("name" = "Fragebogen zu sportlichen Aktivitäten",
                              "git_repo"  = "https://github.com/fmhoeger/psyquest",
                              "ref_paper" = ""), 
+                   "IMI" = c("name" = "Fragebogen zu Ohrwürmern",
+                             "git_repo"  = "https://github.com/klausfrieler/psyquest",
+                             "ref_paper" = ""), 
+                   "JIW" = c("name" = "Fragebogen zu Fähigkeiten in der Jazz Improvisation",
+                             "git_repo"  = "https://github.com/klausfrieler/psyquest",
+                             "ref_paper" = ""), 
+                   
                    "HD3" = "Selbstauskunftsfragebogen zu psychosozialen Faktoren",
                    "DEG" = c("name" = "Basisdemographische Angaben",
                              "git_repo"  = "https://github.com/fmhoeger/psyquest",
@@ -166,7 +173,7 @@ get_test_prop <- function(test_id, prop){
 }
 static_selection_page <-function(){
   if(local_debug){
-    base_url <- "http://127.0.0.1:3973/"
+    base_url <- "http://127.0.0.1:6969/"
     
   }
   else{
@@ -403,6 +410,8 @@ dots_demo  <- function(title = "DOTS Demo",
     psychTestR::conditional(include_test("TPI"), wrap_quest_full_demo(psyquest::TPI(), "TPI")),
     psychTestR::conditional(include_test("SCS"), wrap_quest_full_demo(psyquest::SCS(short_version = T), "SCS")),
     psychTestR::conditional(include_test("SCA"), wrap_quest_full_demo(psyquest::SCA(short_version = T), "SCA")),
+    psychTestR::conditional(include_test("IMI"), wrap_quest_full_demo(psyquest::IMI(), "IMI")),
+    psychTestR::conditional(include_test("JIW"), wrap_quest_full_demo(psyquest::JIW(), "JIW")),
     psychTestR::conditional(include_test("HOP"), wrap_quest_full_demo(psyquest::HOP(), "HOP")),
     psychTestR::conditional(include_test("GRT"), wrap_quest_full_demo(psyquest::GRT(), "GRT")),
     psychTestR::conditional(include_test("SEM"), wrap_quest_full_demo(psyquest::SEM(), "SEM")),
