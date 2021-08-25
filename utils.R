@@ -31,8 +31,8 @@ check_test_sequence <- function(seq){
   seq <- gsub("MDI", "MDT", seq, fixed = T)
   #DEG, SDQ, BAT, SCS, EDT, MHE, TPI, GMS, TOI, MIQ, MDT, DAC, SEM, MPT, SCA
   mandatory <- c("GMS", "BAT", "MDT", "MPT", "DEG")
-  listening_tests <- c("EDT", "JAJ", "MIQ", "RAT", "BAT", "MDT", "MPT")
-  questionnaires <- c("CCM", "DAC", "MHE", "PAC", "SCA", "SCS", "SDQ", "SEM", "TOI", "TOM", "TPI")
+  listening_tests <- c("EDT", "JAJ", "MIQ", "RAT", "BAT", "MDT", "MPT", "HPT")
+  questionnaires <- c("CCM", "DAC", "MHE", "PAC", "SCA", "SCS", "SDQ", "SEM", "TOI", "TOM", "TPI", "IMI", "JIC", "JIW")
   check_mandatory <- intersect(seq, mandatory)
   okay <- TRUE
   if(length(check_mandatory) != length(mandatory)){

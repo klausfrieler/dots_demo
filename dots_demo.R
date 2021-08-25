@@ -4,17 +4,20 @@ library(psychTestR)
 library(shiny)
 source("./utils.R")
 
-num_items <- c(BAT = 3,EDT = 3, JAJ = 3, MDT = 3, MIQ = 3, MPT = 3, RAT = 3, PIT = 3, BDS = 3) 
+num_items <- c(BAT = 3, EDT = 3, JAJ = 3, MDT = 3, MIQ = 3, MPT = 3, RAT = 3, PIT = 3, BDS = 3, HPT = 3, BDT = 3) 
 #num_items <- c(BAT = 1,EDT = 1, JAJ = 1, MDT = 1, MIQ = 1, MPT = 1, RAT = 1) 
 take_training <- T
 
 all_tests <- c(
-  "DEG", "GMS", "BAT", "MDT", "MPT", "CCM", "DAC", "MHE", "PAC", "SCA", "SCS", "SDQ", "SEM", "TOI", "TOM", "SMP", "TPI", 
+  "DEG", "GMS", "BAT", "MDT", "MPT", "CCM", "DAC", "MHE", "PAC", "SCA", "SCS", "SDQ", "SEM", "TOI", "TOM", "SMP", "TPI", "HPT", "BDT",
   "EDT", "JAJ", "MIQ", "RAT", "GRT", "HOP", "BDS"
 )
 test_names <- list("HD0" = "Musikalische Hörtests",
                    "BAT" = c("name" = "Beatwahrnehmungs-Test", 
                              "git_repo" = "https://github.com/pmcharrison/cabat", 
+                             "ref_paper" ="https://www.nature.com/articles/s41598-018-30318-8"),
+                   "BDT" = c("name" = "Beat-Drop-Test", 
+                             "git_repo" = "https://github.com/klausfrieler/BDT", 
                              "ref_paper" ="https://www.nature.com/articles/s41598-018-30318-8"),
                    "MDT" = c("name" = "Melodieunterscheidungs-Tests",
                              "git_repo" = "https://github.com/pmcharrison/mdt",
@@ -31,7 +34,9 @@ test_names <- list("HD0" = "Musikalische Hörtests",
                    "EDT" = c("name" = "Emotionenunterscheidungs-Test",
                              "git_repo" = "https://github.com/klausfrieler/EDT",
                              "ref_paper" = "https://www.frontiersin.org/articles/10.3389/fpsyg.2019.01955/full"),
-                   
+                   "HPT" = c("name" = "Dreiklangsfolgen-Test",
+                             "git_repo" = "https://github.com/klausfrieler/HPT",
+                             "ref_paper" = ""),
                    "HD1"  = "Nicht-musikalische Leistungstests",
                    #"MIQ" = "Cognitive Puzzles Test",
                    "JAJ" = c("name" = "Jack & Jill Arbeitsgedächtnis-Test",
@@ -40,6 +45,15 @@ test_names <- list("HD0" = "Musikalische Hörtests",
                    "BDS" = c("name" = "Backward Digit Span Arbeitsgedächtnis-Test",
                              "git_repo" = "https://github.com/klausfrieler/BDS",
                              "ref_paper" = ""),
+                   "SRS" = c("name" = "Sprachrhythmus-Test",
+                             "git_repo" = "https://github.com/klausfrieler/mpipoet",
+                             "ref_paper" = ""),
+                   "SLS" = c("name" = "Salzburger-Lese-Screening",
+                             "git_repo" = "https://github.com/klausfrieler/mpipoet",
+                             "ref_paper" = ""),
+                   "ART" = c("name" = "Literatenquiz",
+                             "git_repo"  = "https://github.com/klausfrieler/mpipoett",
+                             "ref_paper" = ""), 
                    "HD2" = "Selbstauskunftsfragebögen zu musikalischen und anderen Aktivitäten",
                    "GMS" = c("name" = "Goldsmiths Musical Sophistication Index",
                              "git_repo" = "https://github.com/fmhoeger/psyquest",
@@ -59,10 +73,22 @@ test_names <- list("HD0" = "Musikalische Hörtests",
                    "IMI" = c("name" = "Fragebogen zu Ohrwürmern",
                              "git_repo"  = "https://github.com/klausfrieler/psyquest",
                              "ref_paper" = ""), 
-                   "JIW" = c("name" = "Selbseinschätzung von Jazz-Improvisationsfähigkeiten",
+                   "EWE" = c("name" = "Fragebogen zum Ohrwurmerleben",
+                             "git_repo"  = "https://github.com/klausfrieler/psyquest",
+                             "ref_paper" = ""), 
+                   "JIW" = c("name" = "Selbsteinschätzung von Jazz-Improvisationsfähigkeiten",
                              "git_repo"  = "https://github.com/klausfrieler/psyquest",
                              "ref_paper" = ""), 
                    "JIC" = c("name" = "Fragebogen zur Jazz Improvisation",
+                             "git_repo"  = "https://github.com/klausfrieler/psyquest",
+                             "ref_paper" = ""), 
+                   "FSS" = c("name" = "Rheinbergs Flow Short Scale",
+                             "git_repo"  = "https://github.com/klausfrieler/psyquest",
+                             "ref_paper" = ""), 
+                   "FSR" = c("name" = "Fragebogen zur Flow Experiences",
+                             "git_repo"  = "https://github.com/klausfrieler/psyquest",
+                             "ref_paper" = ""), 
+                   "GDS" = c("name" = "Goldsmiths Dance Sophistication Index",
                              "git_repo"  = "https://github.com/klausfrieler/psyquest",
                              "ref_paper" = ""), 
                    "HD3" = "Selbstauskunftsfragebogen zu psychosozialen Faktoren",
@@ -80,7 +106,7 @@ test_names <- list("HD0" = "Musikalische Hörtests",
                    "TOI" = c("name" = "Fragebogen zur Theorie of Intelligenz",
                              "git_repo"  = "https://github.com/fmhoeger/psyquest",
                              "ref_paper" = ""), 
-                   "SDQ" = c("name" = "Fragebiogen zu Stärken und Schwächen",
+                   "SDQ" = c("name" = "Fragebogen zu Stärken und Schwächen",
                              "git_repo"  = "https://github.com/fmhoeger/psyquest",
                              "ref_paper" = ""), 
                    "SEM" = c("name" = "Fragebogen zu Schulengagement",
@@ -101,6 +127,15 @@ test_names <- list("HD0" = "Musikalische Hörtests",
                    "TPI" = c("name" = "10-Item Persönlichkeitsinventar",
                              "git_repo"  = "https://github.com/fmhoeger/psyquest",
                              "ref_paper" = ""), 
+                   "BFI" = c("name" = "15-Item Persönlichkeitsinventar (BFI)",
+                             "git_repo"  = "https://github.com/klausfrieler/mpipoet",
+                             "ref_paper" = ""), 
+                   "BFA" = c("name" = "Persönlichkeitsinventar Aspekte der Offenheit",
+                             "git_repo"  = "https://github.com/klausfrieler/mpipoet",
+                             "ref_paper" = ""), 
+                   "ARA" = c("name" = "Fragebogen zur Ästhetischen Wertschätzung (AReA)",
+                             "git_repo"  = "https://github.com/klausfrieler/mpipoet",
+                             "ref_paper" = "https://doi.apa.org/doiLanding?doi=10.1037%2Faca0000348"), 
                    "NA" = "")
 
 include_test <- function(test_id ){
@@ -175,7 +210,7 @@ get_test_prop <- function(test_id, prop){
 }
 static_selection_page <-function(){
   if(local_debug){
-    base_url <- "http://127.0.0.1:5296/"
+    base_url <- "http://127.0.0.1:5362/"
     
   }
   else{
@@ -365,6 +400,22 @@ dots_demo  <- function(title = "DOTS Demo",
                                          feedback = psychTestRCAT::cat.feedback.graph(test_label = "PIT")),
                               welcome_finished_page("finished", "PIT")
                             )),
+    psychTestR::conditional(include_test("HPT"), 
+                              HPT::HPT(num_items = num_items[["HPT"]], 
+                                       take_training = take_training)
+                            ),
+    psychTestR::conditional(include_test("SLS"), 
+                            mpipoet::SLS(num_items = NULL,
+                                         with_welcome = TRUE, 
+                                         with_training = take_training,
+                                         with_feedback = TRUE
+                                         )),
+    psychTestR::conditional(include_test("SRS"), 
+                            mpipoet::SRS(num_items = NULL,
+                                         with_welcome = TRUE, 
+                                         with_training = take_training,
+                                         with_feedback = TRUE
+                            )),
     psychTestR::conditional(include_test("TOI"), wrap_quest_full_demo(psyquest::TOI(), "TOI")),
     psychTestR::conditional(include_test("JAJ"), 
                             psychTestR::join(
@@ -384,6 +435,13 @@ dots_demo  <- function(title = "DOTS Demo",
                                            take_training = take_training,
                                            feedback = psychTestRCAT::cat.feedback.graph(test_label = "BAT"))
                             )),    
+    psychTestR::conditional(include_test("BDT"), 
+                            psychTestR::join(
+                              BDT::BDT(num_items = num_items[["BDT"]], 
+                                       take_training = take_training,
+                                       feedback = BDT::BDT.feedback.simple_score()))),
+    psychTestR::conditional(include_test("ART"), 
+                              mpipoet::ART(mode = "single_page", with_feedback = TRUE)),
     psychTestR::conditional(include_test("MHE"), wrap_quest_full_demo(psyquest::MHE(), "MHE")),
     psychTestR::conditional(include_test("GMS"), 
                             psychTestR::join(
@@ -410,11 +468,18 @@ dots_demo  <- function(title = "DOTS Demo",
     psychTestR::conditional(include_test("SMP"), wrap_quest_full_demo(psyquest::SMP(), "SMP")),
     psychTestR::conditional(include_test("MUS"), wrap_quest_full_demo(psyquest::MUS(), "MUS")),
     psychTestR::conditional(include_test("TPI"), wrap_quest_full_demo(psyquest::TPI(), "TPI")),
+    psychTestR::conditional(include_test("BFI"), wrap_quest_full_demo(mpipoet::BFI(), "BFI")),
+    psychTestR::conditional(include_test("BFA"), wrap_quest_full_demo(mpipoet::BFA(), "BFA")),
+    psychTestR::conditional(include_test("ARA"), wrap_quest_full_demo(mpipoet::ARA(), "ARA")),
     psychTestR::conditional(include_test("SCS"), wrap_quest_full_demo(psyquest::SCS(short_version = T), "SCS")),
     psychTestR::conditional(include_test("SCA"), wrap_quest_full_demo(psyquest::SCA(short_version = T), "SCA")),
     psychTestR::conditional(include_test("IMI"), wrap_quest_full_demo(psyquest::IMI(), "IMI")),
+    psychTestR::conditional(include_test("EWE"), wrap_quest_full_demo(psyquest::EWE(), "EWE")),
     psychTestR::conditional(include_test("JIW"), wrap_quest_full_demo(psyquest::JIW(), "JIW")),
     psychTestR::conditional(include_test("JIC"), wrap_quest_full_demo(psyquest::JIC(), "JIC")),
+    psychTestR::conditional(include_test("FSS"), wrap_quest_full_demo(psyquest::FSS(), "FSS")),
+    psychTestR::conditional(include_test("FSR"), wrap_quest_full_demo(psyquest::FSR(), "FSR")),
+    psychTestR::conditional(include_test("GDS"), wrap_quest_full_demo(psyquest::GDS(), "GDS")),
     psychTestR::conditional(include_test("HOP"), wrap_quest_full_demo(psyquest::HOP(), "HOP")),
     psychTestR::conditional(include_test("GRT"), wrap_quest_full_demo(psyquest::GRT(), "GRT")),
     psychTestR::conditional(include_test("SEM"), wrap_quest_full_demo(psyquest::SEM(), "SEM")),
@@ -427,7 +492,7 @@ dots_demo  <- function(title = "DOTS Demo",
                             )),
     psychTestR::new_timeline(
       psychTestR::final_page(shiny::p(
-        "Sie den Browser Tab jetzt schließen."
+        "Sie können den Browsertab jetzt schließen."
       )), dict = dict)
   )
   psychTestR::make_test(
