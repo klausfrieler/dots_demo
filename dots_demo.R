@@ -91,6 +91,9 @@ test_names <- list("HD0" = "Musikalische Hörtests",
                    "GDS" = c("name" = "Goldsmiths Dance Sophistication Index",
                              "git_repo"  = "https://github.com/klausfrieler/psyquest",
                              "ref_paper" = ""), 
+                   "MES" = c("name" = "Music-Empathizing-Music-Systemizing Inventory (Short Scale)",
+                             "git_repo"  = "https://github.com/klausfrieler/psyquest",
+                             "ref_paper" = "https://www.frontiersin.org/articles/10.3389/fnbeh.2018.00153/full"), 
                    "HD3" = "Selbstauskunftsfragebogen zu psychosozialen Faktoren",
                    "DEG" = c("name" = "Basisdemographische Angaben",
                              "git_repo"  = "https://github.com/fmhoeger/psyquest",
@@ -210,7 +213,7 @@ get_test_prop <- function(test_id, prop){
 }
 static_selection_page <-function(){
   if(local_debug){
-    base_url <- "http://127.0.0.1:5362/"
+    base_url <- "http://127.0.0.1:4081/"
     
   }
   else{
@@ -478,6 +481,7 @@ dots_demo  <- function(title = "DOTS Demo",
     psychTestR::conditional(include_test("JIW"), wrap_quest_full_demo(psyquest::JIW(), "JIW")),
     psychTestR::conditional(include_test("JIC"), wrap_quest_full_demo(psyquest::JIC(), "JIC")),
     psychTestR::conditional(include_test("FSS"), wrap_quest_full_demo(psyquest::FSS(), "FSS")),
+    psychTestR::conditional(include_test("MES"), wrap_quest_full_demo(psyquest::MES(), "MES")),
     psychTestR::conditional(include_test("FSR"), wrap_quest_full_demo(psyquest::FSR(), "FSR")),
     psychTestR::conditional(include_test("GDS"), wrap_quest_full_demo(psyquest::GDS(), "GDS")),
     psychTestR::conditional(include_test("HOP"), wrap_quest_full_demo(psyquest::HOP(), "HOP")),
