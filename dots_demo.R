@@ -4,13 +4,13 @@ library(psychTestR)
 library(shiny)
 source("./utils.R")
 
-num_items <- c(BAT = 3, EDT = 3, JAJ = 3, MDT = 3, MIQ = 3, MPT = 3, RAT = 3, PIT = 3, BDS = 3, HPT = 3, BDT = 3) 
+num_items <- c(BAT = 3, EDT = 3, JAJ = 3, MDT = 3, MIQ = 3, MPT = 3, RAT = 3, PIT = 3, BDS = 3, HPT = 3, BDT = 3, MSA = 3) 
 #num_items <- c(BAT = 1,EDT = 1, JAJ = 1, MDT = 1, MIQ = 1, MPT = 1, RAT = 1) 
 take_training <- T
 
 all_tests <- c(
   "DEG", "GMS", "BAT", "MDT", "MPT", "CCM", "DAC", "MHE", "PAC", "SCA", "SCS", "SDQ", "SEM", "TOI", "TOM", "SMP", "TPI", "HPT", "BDT",
-  "EDT", "JAJ", "MIQ", "RAT", "GRT", "HOP", "BDS"
+  "EDT", "JAJ", "MIQ", "RAT", "MSA", "GRT", "HOP", "BDS", "BMR", "HUM", "HSP", "PMS"
 )
 test_names <- list("HD0" = "Musikalische Hörtests",
                    "BAT" = c("name" = "Beatwahrnehmungs-Test", 
@@ -27,6 +27,9 @@ test_names <- list("HD0" = "Musikalische Hörtests",
                              "ref_paper" = "https://link.springer.com/article/10.3758%2Fs13428-019-01225-1"), 
                    "RAT" = c("name" = "Rhythmusfähigkeits-Test",
                              "git_repo" = "https://github.com/klausfrieler/RAT",
+                             "ref_paper" = ""),
+                   "MSA" = c("name" = "Test zu Musikalischen Szenenanalyse",
+                             "git_repo" = "https://github.com/rhake14/MSA",
                              "ref_paper" = ""),
                    "PIT" = c("name" =" Tonvorstellungs-Test",
                              "git_repo" = "https://github.com/pmcharrison/piat",
@@ -136,6 +139,19 @@ test_names <- list("HD0" = "Musikalische Hörtests",
                    "BFA" = c("name" = "Persönlichkeitsinventar Aspekte der Offenheit",
                              "git_repo"  = "https://github.com/klausfrieler/mpipoet",
                              "ref_paper" = ""), 
+                   "BMR" = c("name" = "Barcelona Music Reward Fragebogen",
+                             "git_repo"  = "https://github.com/klausfrieler/psyquest",
+                             "ref_paper" = "https://doi.org/10.1037/t31533-000"), 
+                   "HSP" = c("name" = "Highly Sensitive Personality Scale",
+                             "git_repo"  = "https://github.com/klausfrieler/psyquest",
+                             "ref_paper" = "https://doi.org/10.1037/0022-3514.73.2.345"), 
+                   "HUM" = c("name" = "Healthy/Unhealty Music Scale",
+                             "git_repo"  = "https://github.com/klausfrieler/psyquest",
+                             "ref_paper" = "https://acamh.onlinelibrary.wiley.com/doi/full/10.1111/camh.12109"), 
+                   "PMS" = c("name" = "Profile of Mood Scale",
+                             "git_repo"  = "https://github.com/klausfrieler/psyquest",
+                             "ref_paper" = "https://www.researchgate.net/publication/232536671_Preliminary_evidence_for_the_reliability_and_validity_of_an_abbreviated_Profile_of_Mood_States"), 
+                   
                    "ARA" = c("name" = "Fragebogen zur Ästhetischen Wertschätzung (AReA)",
                              "git_repo"  = "https://github.com/klausfrieler/mpipoet",
                              "ref_paper" = "https://doi.apa.org/doiLanding?doi=10.1037%2Faca0000348"), 
@@ -204,6 +220,7 @@ get_test_name <- function(test_id){
     return(tmp[["name"]])
   }
 }
+
 get_test_prop <- function(test_id, prop){
   tmp <- test_names[[test_id]]
   if(prop %in% names(tmp)){
@@ -211,9 +228,10 @@ get_test_prop <- function(test_id, prop){
   }
   tmp
 }
+
 static_selection_page <-function(){
   if(local_debug){
-    base_url <- "http://127.0.0.1:4081/"
+    base_url <- "http://127.0.0.1:7836/"
     
   }
   else{
@@ -468,6 +486,12 @@ dots_demo  <- function(title = "DOTS Demo",
                                        take_training = take_training,
                                        feedback = RAT::RAT_feedback_with_graph())
                             )),
+    psychTestR::conditional(include_test("MSA"), 
+                            psychTestR::join(
+                              MSA::MSA(num_items = num_items[["MSA"]], 
+                                       take_training = take_training,
+                                       feedback = MSA::MSA_feedback_with_graph())
+                            )),
     psychTestR::conditional(include_test("SMP"), wrap_quest_full_demo(psyquest::SMP(), "SMP")),
     psychTestR::conditional(include_test("MUS"), wrap_quest_full_demo(psyquest::MUS(), "MUS")),
     psychTestR::conditional(include_test("TPI"), wrap_quest_full_demo(psyquest::TPI(), "TPI")),
@@ -486,6 +510,10 @@ dots_demo  <- function(title = "DOTS Demo",
     psychTestR::conditional(include_test("GDS"), wrap_quest_full_demo(psyquest::GDS(), "GDS")),
     psychTestR::conditional(include_test("HOP"), wrap_quest_full_demo(psyquest::HOP(), "HOP")),
     psychTestR::conditional(include_test("GRT"), wrap_quest_full_demo(psyquest::GRT(), "GRT")),
+    psychTestR::conditional(include_test("BMR"), wrap_quest_full_demo(psyquest::BMR(), "BMR")),
+    psychTestR::conditional(include_test("HUM"), wrap_quest_full_demo(psyquest::HUM(), "HUM")),
+    psychTestR::conditional(include_test("HSP"), wrap_quest_full_demo(psyquest::HSP(), "HSP")),
+    psychTestR::conditional(include_test("PMS"), wrap_quest_full_demo(psyquest::PMS(), "PMS")),
     psychTestR::conditional(include_test("SEM"), wrap_quest_full_demo(psyquest::SEM(), "SEM")),
     psychTestR::conditional(include_test("EDT"), 
                             psychTestR::join(
