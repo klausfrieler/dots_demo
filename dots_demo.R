@@ -4,13 +4,13 @@ library(psychTestR)
 library(shiny)
 source("./utils.R")
 
-num_items <- c(BAT = 3, EDT = 3, JAJ = 3, MDT = 3, MIQ = 3, MPT = 3, RAT = 3, PIT = 3, BDS = 3, HPT = 3, BDT = 3, MSA = 3) 
+num_items <- c(BAT = 3, BDT = 3, EDT = 3, JAJ = 3, MDT = 3, MIQ = 3, MPT = 3, RAT = 3, PIT = 3, BDS = 3, HPT = 3, BDT = 3, MSA = 3) 
 #num_items <- c(BAT = 1,EDT = 1, JAJ = 1, MDT = 1, MIQ = 1, MPT = 1, RAT = 1) 
 take_training <- T
 
 all_tests <- c(
-  "DEG", "GMS", "BAT", "MDT", "MPT", "CCM", "DAC", "MHE", "PAC", "SCA", "SCS", "SDQ", "SEM", "TOI", "TOM", "SMP", "TPI", "HPT", "BDT",
-  "EDT", "JAJ", "MIQ", "RAT", "MSA", "GRT", "HOP", "BDS", "BMR", "HUM", "HSP", "PMS"
+  "DEG", "GMS", "BAT", "BDT", "MDT", "MPT", "CCM", "DAC", "MHE", "PAC", "SCA", "SCS", "SDQ", "SEM", "TOI", "TOM", "SMP", "TPI", "HPT", "BDT",
+  "EDT", "JAJ", "MIQ", "RAT", "MSA", "GRT", "HOP", "BDS", "BMR", "HUM", "HSP", "PMS", "MES", "MET"
 )
 test_names <- list("HD0" = "Musikalische Hörtests",
                    "BAT" = c("name" = "Beatwahrnehmungs-Test", 
@@ -18,7 +18,7 @@ test_names <- list("HD0" = "Musikalische Hörtests",
                              "ref_paper" ="https://www.nature.com/articles/s41598-018-30318-8"),
                    "BDT" = c("name" = "Beat-Drop-Test", 
                              "git_repo" = "https://github.com/klausfrieler/BDT", 
-                             "ref_paper" ="https://www.nature.com/articles/s41598-018-30318-8"),
+                             "ref_paper" = "https://link.springer.com/article/10.3758/s13414-022-02592-2"),
                    "MDT" = c("name" = "Melodieunterscheidungs-Tests",
                              "git_repo" = "https://github.com/pmcharrison/mdt",
                              "ref_paper" = "https://www.nature.com/articles/s41598-017-03586-z"),
@@ -97,6 +97,9 @@ test_names <- list("HD0" = "Musikalische Hörtests",
                    "MES" = c("name" = "Music-Empathizing-Music-Systemizing Inventory (Short Scale)",
                              "git_repo"  = "https://github.com/klausfrieler/psyquest",
                              "ref_paper" = "https://www.frontiersin.org/articles/10.3389/fnbeh.2018.00153/full"), 
+                   "MET" = c("name" = "Music Engagement Test",
+                             "git_repo"  = "https://github.com/klausfrieler/psyquest",
+                             "ref_paper" = "http://www.davidmgreenberg.com/wp-content/uploads/2018/11/Greenberg-Rentfrow-escom-2015-Rules-of-engagement-The-structure-of-musical-engagement-and-its-personality-underpinnings-1.pdf"), 
                    "HD3" = "Selbstauskunftsfragebogen zu psychosozialen Faktoren",
                    "DEG" = c("name" = "Basisdemographische Angaben",
                              "git_repo"  = "https://github.com/fmhoeger/psyquest",
@@ -506,6 +509,7 @@ dots_demo  <- function(title = "DOTS Demo",
     psychTestR::conditional(include_test("JIC"), wrap_quest_full_demo(psyquest::JIC(), "JIC")),
     psychTestR::conditional(include_test("FSS"), wrap_quest_full_demo(psyquest::FSS(), "FSS")),
     psychTestR::conditional(include_test("MES"), wrap_quest_full_demo(psyquest::MES(), "MES")),
+    psychTestR::conditional(include_test("MET"), wrap_quest_full_demo(psyquest::MET(), "MET")),
     psychTestR::conditional(include_test("FSR"), wrap_quest_full_demo(psyquest::FSR(), "FSR")),
     psychTestR::conditional(include_test("GDS"), wrap_quest_full_demo(psyquest::GDS(), "GDS")),
     psychTestR::conditional(include_test("HOP"), wrap_quest_full_demo(psyquest::HOP(), "HOP")),
