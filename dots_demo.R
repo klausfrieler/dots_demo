@@ -3,14 +3,27 @@ library(psychTestR)
 
 library(shiny)
 source("./utils.R")
+num_items <- list(BAT = 3, 
+                  BDT = 3, 
+                  EDT = 3, 
+                  JAJ = 3, 
+                  MDT = 3, 
+                  MIQ = 3, 
+                  MPT = 3, 
+                  RAT = 3, 
+                  PIT = 3, 
+                  BDS = 3, 
+                  HPT = 3, 
+                  BDT = 3, 
+                  MSA = 3, 
+                  SAA = list("long_tones" = 3L, "arrhythmic" = 3L, "rhythmic" = 3L))
 
-num_items <- c(BAT = 3, BDT = 3, EDT = 3, JAJ = 3, MDT = 3, MIQ = 3, MPT = 3, RAT = 3, PIT = 3, BDS = 3, HPT = 3, BDT = 3, MSA = 3) 
 #num_items <- c(BAT = 1,EDT = 1, JAJ = 1, MDT = 1, MIQ = 1, MPT = 1, RAT = 1) 
 take_training <- T
 
 all_tests <- c(
   "DEG", "GMS", "BAT", "BDT", "MDT", "MPT", "CCM", "DAC", "MHE", "PAC", "SCA", "SCS", "SDQ", "SEM", "TOI", "TOM", "SMP", "TPI", "HPT", "BDT",
-  "EDT", "JAJ", "MIQ", "RAT", "MSA", "GRT", "HOP", "BDS", "BMR", "HUM", "HSP", "PMS", "MES", "MET"
+  "EDT", "JAJ", "MIQ", "RAT", "MSA", "GRT", "HOP", "BDS", "BMR", "HUM", "HSP", "PMS", "MES", "MET", "SAA"
 )
 test_names <- list("HD0" = "Musikalische Hörtests",
                    "BAT" = c("name" = "Beatwahrnehmungs-Test", 
@@ -39,6 +52,9 @@ test_names <- list("HD0" = "Musikalische Hörtests",
                              "ref_paper" = "https://www.frontiersin.org/articles/10.3389/fpsyg.2019.01955/full"),
                    "HPT" = c("name" = "Dreiklangsfolgen-Test",
                              "git_repo" = "https://github.com/klausfrieler/HPT",
+                             "ref_paper" = ""),
+                   "SAA" = c("name" = "Singfähigkeitstest",
+                             "git_repo" = "https://github.com/sebsilas/SAA",
                              "ref_paper" = ""),
                    "HD1"  = "Nicht-musikalische Leistungstests",
                    #"MIQ" = "Cognitive Puzzles Test",
@@ -234,7 +250,7 @@ get_test_prop <- function(test_id, prop){
 
 static_selection_page <-function(){
   if(local_debug){
-    base_url <- "http://127.0.0.1:7836/"
+    base_url <- "http://127.0.0.1:5462/"
     
   }
   else{
@@ -428,6 +444,15 @@ dots_demo  <- function(title = "DOTS Demo",
                               HPT::HPT(num_items = num_items[["HPT"]], 
                                        take_training = take_training)
                             ),
+    psychTestR::conditional(include_test("SAA"), 
+                            SAA::SAA(num_items = num_items[["SAA"]], 
+                                     app_name = "dots_demo",
+                                     absolute_url = "https://testing.musikpsychologie.de/dots_demo/",
+                                     final_results = FALSE,
+                                     demographics = FALSE,
+                                     musicassessr_aws = TRUE,
+                                     gold_msi = FALSE)
+    ),
     psychTestR::conditional(include_test("SLS"), 
                             mpipoet::SLS(num_items = 5,
                                          with_welcome = TRUE, 
