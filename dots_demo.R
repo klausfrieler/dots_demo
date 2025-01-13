@@ -23,7 +23,7 @@ take_training <- T
 
 all_tests <- c(
   "DEG", "GMS", "BAT", "BDT", "MDT", "MPT", "CCM", "DAC", "MHE", "PAC", "SCA", "SCS", "SDQ", "SEM", "TOI", "TOM", "SMP", "TPI", "HPT", "BDT",
-  "EDT", "JAJ", "MIQ", "RAT", "MSA", "GRT", "HOP", "BDS", "BMR", "HUM", "HSP", "PMS", "MES", "MET", "SAA"
+  "EDT", "JAJ", "MIQ", "RAT", "MSA", "GRT", "HOP", "BDS", "BMR", "HUM", "HSP", "PMS", "SWL", "MES", "MET", "SAA"
 )
 test_names <- list("HD0" = "Musikalische Hörtests",
                    "BAT" = c("name" = "Beatwahrnehmungs-Test", 
@@ -53,9 +53,9 @@ test_names <- list("HD0" = "Musikalische Hörtests",
                    "HPT" = c("name" = "Dreiklangsfolgen-Test",
                              "git_repo" = "https://github.com/klausfrieler/HPT",
                              "ref_paper" = ""),
-                   "SAA" = c("name" = "Singfähigkeitstest",
-                             "git_repo" = "https://github.com/sebsilas/SAA",
-                             "ref_paper" = ""),
+                   # "SAA" = c("name" = "Singfähigkeitstest",
+                   #           "git_repo" = "https://github.com/sebsilas/SAA",
+                   #           "ref_paper" = ""),
                    "HD1"  = "Nicht-musikalische Leistungstests",
                    #"MIQ" = "Cognitive Puzzles Test",
                    "JAJ" = c("name" = "Jack & Jill Arbeitsgedächtnis-Test",
@@ -170,7 +170,9 @@ test_names <- list("HD0" = "Musikalische Hörtests",
                    "PMS" = c("name" = "Profile of Mood Scale",
                              "git_repo"  = "https://github.com/klausfrieler/psyquest",
                              "ref_paper" = "https://www.researchgate.net/publication/232536671_Preliminary_evidence_for_the_reliability_and_validity_of_an_abbreviated_Profile_of_Mood_States"), 
-                   
+                   "SWL" = c("name" = "Satisfaction with Life (for Children)",
+                             "git_repo"  = "https://github.com/klausfrieler/psyquest",
+                             "ref_paper" = "https://www.researchgate.net/publication/232536671_Preliminary_evidence_for_the_reliability_and_validity_of_an_abbreviated_Profile_of_Mood_States"),
                    "ARA" = c("name" = "Fragebogen zur Ästhetischen Wertschätzung (AReA)",
                              "git_repo"  = "https://github.com/klausfrieler/mpipoet",
                              "ref_paper" = "https://doi.apa.org/doiLanding?doi=10.1037%2Faca0000348"), 
@@ -250,7 +252,7 @@ get_test_prop <- function(test_id, prop){
 
 static_selection_page <-function(){
   if(local_debug){
-    base_url <- "http://127.0.0.1:5462/"
+    base_url <- "http://127.0.0.1:7618/"
     
   }
   else{
@@ -444,15 +446,15 @@ dots_demo  <- function(title = "DOTS Demo",
                               HPT::HPT(num_items = num_items[["HPT"]], 
                                        take_training = take_training)
                             ),
-    psychTestR::conditional(include_test("SAA"), 
-                            SAA::SAA(num_items = num_items[["SAA"]], 
-                                     app_name = "dots_demo",
-                                     absolute_url = "https://testing.musikpsychologie.de/dots_demo/",
-                                     final_results = FALSE,
-                                     demographics = FALSE,
-                                     musicassessr_aws = TRUE,
-                                     gold_msi = FALSE)
-    ),
+    # psychTestR::conditional(include_test("SAA"), 
+    #                         SAA::SAA(num_items = num_items[["SAA"]], 
+    #                                  app_name = "dots_demo",
+    #                                  absolute_url = "https://testing.musikpsychologie.de/dots_demo/",
+    #                                  final_results = FALSE,
+    #                                  demographics = FALSE,
+    #                                  musicassessr_aws = TRUE,
+    #                                  gold_msi = FALSE)
+    # ),
     psychTestR::conditional(include_test("SLS"), 
                             mpipoet::SLS(num_items = 5,
                                          with_welcome = TRUE, 
@@ -543,6 +545,7 @@ dots_demo  <- function(title = "DOTS Demo",
     psychTestR::conditional(include_test("HUM"), wrap_quest_full_demo(psyquest::HUM(), "HUM")),
     psychTestR::conditional(include_test("HSP"), wrap_quest_full_demo(psyquest::HSP(), "HSP")),
     psychTestR::conditional(include_test("PMS"), wrap_quest_full_demo(psyquest::PMS(), "PMS")),
+    psychTestR::conditional(include_test("SWL"), wrap_quest_full_demo(psyquest::SWL(), "SWL")),
     psychTestR::conditional(include_test("SEM"), wrap_quest_full_demo(psyquest::SEM(), "SEM")),
     psychTestR::conditional(include_test("EDT"), 
                             psychTestR::join(
@@ -563,6 +566,10 @@ dots_demo  <- function(title = "DOTS Demo",
                                    admin_password = admin_password,
                                    demo = TRUE,
                                    languages = languages,
+                                   # additional_scripts = musicassessr::musicassessr_js(
+                                   #   musicassessr_aws = TRUE, 
+                                   #   app_name = "dots_demo", 
+                                   #   visual_notation = TRUE), 
                                    #logo = "https://s3-eu-west-1.amazonaws.com/media.dots.org/img/dots_logo_v3.png",
                                    logo = "https://s3-eu-west-1.amazonaws.com/media.dots.org/img/dgm_logo_v2.png",
                                    logo_width = "96px",
