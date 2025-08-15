@@ -22,7 +22,7 @@ num_items <- list(BAT = 3,
 take_training <- T
 
 all_tests <- c(
-  "DEG", "GMS", "BAT", "BDT", "MDT", "MPT", "CCM", "DAC", "MHE", "PAC", "SCA", "SCS", "SDQ", "SEM", "TOI", "TOM", "SMP", "TPI", "HPT", "BDT",
+  "DEG", "GMS", "BAT", "BDT", "MDT", "MPT", "CCM", "DAC", "MHE", "PAC", "SCA", "SCS", "SDQ", "SEM", "TOI", "TOM", "SMP", "TPI", "HPT", "MSA", "BDT",
   "EDT", "JAJ", "MIQ", "RAT", "MSA", "GRT", "HOP", "BDS", "BMR", "HUM", "HSP", "PMS", "SWL", "MES", "MET", "SAA"
 )
 test_names <- list("HD0" = "Musikalische Hörtests",
@@ -41,9 +41,6 @@ test_names <- list("HD0" = "Musikalische Hörtests",
                    "RAT" = c("name" = "Rhythmusfähigkeits-Test",
                              "git_repo" = "https://github.com/klausfrieler/RAT",
                              "ref_paper" = ""),
-                   "MSA" = c("name" = "Test zu Musikalischen Szenenanalyse",
-                             "git_repo" = "https://github.com/rhake14/MSA",
-                             "ref_paper" = ""),
                    "PIT" = c("name" =" Tonvorstellungs-Test",
                              "git_repo" = "https://github.com/pmcharrison/piat",
                              "ref_paper" = "https://link.springer.com/article/10.1007/s00426-020-01322-3"),
@@ -53,6 +50,9 @@ test_names <- list("HD0" = "Musikalische Hörtests",
                    "HPT" = c("name" = "Dreiklangsfolgen-Test",
                              "git_repo" = "https://github.com/klausfrieler/HPT",
                              "ref_paper" = ""),
+                   "MSA" = c("name" = "Test zu musikalischen Szenenanalyse",
+                             "git_repo" = "https://github.com/rhake14/MSA",
+                             "ref_paper" = "https://link.springer.com/article/10.3758/s13428-023-02279-y"),
                    # "SAA" = c("name" = "Singfähigkeitstest",
                    #           "git_repo" = "https://github.com/sebsilas/SAA",
                    #           "ref_paper" = ""),
@@ -172,7 +172,7 @@ test_names <- list("HD0" = "Musikalische Hörtests",
                              "ref_paper" = "https://www.researchgate.net/publication/232536671_Preliminary_evidence_for_the_reliability_and_validity_of_an_abbreviated_Profile_of_Mood_States"), 
                    "SWL" = c("name" = "Satisfaction with Life (for Children)",
                              "git_repo"  = "https://github.com/klausfrieler/psyquest",
-                             "ref_paper" = "https://www.researchgate.net/publication/232536671_Preliminary_evidence_for_the_reliability_and_validity_of_an_abbreviated_Profile_of_Mood_States"),
+                             "ref_paper" = "https://psycnet.apa.org/record/2010-04290-003"),
                    "ARA" = c("name" = "Fragebogen zur Ästhetischen Wertschätzung (AReA)",
                              "git_repo"  = "https://github.com/klausfrieler/mpipoet",
                              "ref_paper" = "https://doi.apa.org/doiLanding?doi=10.1037%2Faca0000348"), 
@@ -252,7 +252,7 @@ get_test_prop <- function(test_id, prop){
 
 static_selection_page <-function(){
   if(local_debug){
-    base_url <- "http://127.0.0.1:7618/"
+    base_url <- "http://127.0.0.1:6570/"
     
   }
   else{
